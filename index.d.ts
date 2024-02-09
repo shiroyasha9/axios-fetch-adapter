@@ -1,3 +1,3 @@
-import { AxiosRequestConfig, AxiosPromise } from 'axios';
+import { AxiosRequestConfig, AxiosPromise } from "axios";
 
 export default function fetchAdapter(config: AxiosRequestConfig): AxiosPromise;
