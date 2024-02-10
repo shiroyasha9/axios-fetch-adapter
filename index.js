@@ -1,9 +1,41 @@
 import axios from "axios";
-import settle from "axios/lib/core/settle";
-import buildURL from "axios/lib/helpers/buildURL";
-import buildFullPath from "axios/lib/core/buildFullPath";
-import { isUndefined, isStandardBrowserEnv, isFormData } from "axios/lib/utils";
+import settle from "axios/unsafe/core/settle";
+import buildURL from "axios/unsafe/helpers/buildURL";
+import buildFullPath from "axios/unsafe/core/buildFullPath";
+import utils from "axios/unsafe/utils";
 
+const { isUndefined, isFormData } = utils;
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ *
+ * @returns {boolean}
+ */
+function isStandardBrowserEnv() {
+  var product;
+  if (
+    typeof navigator !== "undefined" &&
+    ((product = navigator.product) === "ReactNative" ||
+      product === "NativeScript" ||
+      product === "NS")
+  ) {
+    return false;
+  }
+
+  return typeof window !== "undefined" && typeof document !== "undefined";
+}
 /**
  * - Create a request object
  * - Get response body
@@ -167,7 +199,7 @@ function createError(message, config, code, request, response) {
     );
   }
 
-  var error = new Error(message);
+  const error = new Error(message);
   return enhanceError(error, config, code, request, response);
 }
 
