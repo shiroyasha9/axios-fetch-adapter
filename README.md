@@ -1,11 +1,12 @@
 # Why
 
 I had been using [@vespaiach/axios-fetch-adapter](https://github.com/vespaiach/axios-fetch-adapter) for a while and it worked well. However, it's not maintained anymore and I needed it to be compatible with the latest version of Axios. So I decided to fork it and make it work with axios@1+.
-I'm going to adopt PWA to my web applications and those web apps are heavily using Axios with the default XMLHTTPRequest adapter. Hence, I have to switch to Fetch adapter; However, Axios doesn't have an adapter for fetch API for now. So I write one to use while waiting for an offical one from Axios.
+
+Axios doesn't have an adapter for fetch API for now. So you can use this adapter for services that require fetch API (looking at you `contentful` 😒).
 
 # Installation and Usage
 
-You can install the adapter directly from this repository URL or feel free to copy its source code to your project.
+You can install the adapter directly from this repository URL or feel free to copy its source code to your project. Can use npm/yarn/bun/whatever you like.
 
 ```sh
 npm install axios
@@ -51,3 +52,4 @@ axios.request({
 # Note
 
 - Since, this adapter relies on fetch API so it won't work in Node environment
+- Feel free to report any issues and I'll try to fix them!
